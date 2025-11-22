@@ -76,7 +76,6 @@
                     android:text="Elegir Nebula"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
-            
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,7 +118,7 @@
                     android:text="Elegir Quantum"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
-
+            
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
