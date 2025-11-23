@@ -1,5 +1,6 @@
 package com.example.prueba;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -53,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (btnSeeOffers != null) {
             btnSeeOffers.setOnClickListener(v -> {
-                Toast.makeText(this, "Mostrando ofertas…", Toast.LENGTH_SHORT).show();
-                scrollToGrid();
+                Intent intent = new Intent(MainActivity.this, OfertasActivity.class);
+                startActivity(intent);
             });
         }
 
@@ -75,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
         llDynamicBanner.addView(banner);
     }
-
 
     private void scrollToGrid() {
         if (svContent == null || gridGames == null) return;
