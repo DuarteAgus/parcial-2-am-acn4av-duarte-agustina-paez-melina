@@ -18,12 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class DashboardClienteActivity extends AppCompatActivity {
 
+    private TextView tvUsuario;
     private TextView tvEstadoPlan;
     private TextView tvDetallePlan;
 
     private EditText etDispositivo;
     private Button btnAgregarDispositivo;
     private Button btnCatalogoOnline;
+    private Button btnLogout;
     private LinearLayout llDispositivos;
 
     @Override
@@ -31,18 +33,33 @@ public class DashboardClienteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_cliente);
 
-        tvEstadoPlan = findViewById(R.id.tvEstadoPlan);
-        tvDetallePlan = findViewById(R.id.tvDetallePlan);
-
-        etDispositivo = findViewById(R.id.etDispositivo);
+        tvUsuario         = findViewById(R.id.tvUsuario);
+        tvEstadoPlan      = findViewById(R.id.tvEstadoPlan);
+        tvDetallePlan     = findViewById(R.id.tvDetallePlan);
+        etDispositivo     = findViewById(R.id.etDispositivo);
         btnAgregarDispositivo = findViewById(R.id.btnAgregarDispositivo);
         btnCatalogoOnline = findViewById(R.id.btnCatalogoOnline);
-        llDispositivos = findViewById(R.id.llDispositivos);
+        btnLogout         = findViewById(R.id.btnLogout);
+        llDispositivos    = findViewById(R.id.llDispositivos);
+
+        cargarUsuario();
 
         cargarPlanDesdePrefs();
 
         btnAgregarDispositivo.setOnClickListener(v -> agregarDispositivo());
         btnCatalogoOnline.setOnClickListener(v -> abrirCatalogoOnline());
+        btnLogout.setOnClickListener(v -> cerrarSesion());
+    }
+
+    private void cargarUsuario() {
+        SharedPreferences prefsUser = getSharedPreferences(LoginActivity.PREFS_USER, MODE_PRIVATE);
+        String email = prefsUser.getString(LoginActivity.KEY_EMAIL, null);
+
+        if (email != null) {
+            tvUsuario.setText("Usuario: " + email);
+        } else {
+            tvUsuario.setText("Usuario: invitado");
+        }
     }
 
     private void cargarPlanDesdePrefs() {
@@ -51,7 +68,7 @@ public class DashboardClienteActivity extends AppCompatActivity {
         String nombre = prefs.getString("plan_nombre", null);
         String precio = prefs.getString("plan_precio", null);
         String metodo = prefs.getString("plan_metodo", null);
-        String alias = prefs.getString("plan_alias", null);
+        String alias  = prefs.getString("plan_alias", null);
 
         if (nombre == null) {
             tvEstadoPlan.setText("No tenés un plan contratado");
@@ -112,5 +129,17 @@ public class DashboardClienteActivity extends AppCompatActivity {
         return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                 && (caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
                 || caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
+    }
+
+    private void cerrarSesion() {
+        SharedPreferences prefsUser = getSharedPreferences(LoginActivity.PREFS_USER, MODE_PRIVATE);
+        prefsUser.edit().clear().apply();
+
+        Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }
