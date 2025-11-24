@@ -1,12 +1,18 @@
 package com.example.prueba;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +23,7 @@ public class DashboardClienteActivity extends AppCompatActivity {
 
     private EditText etDispositivo;
     private Button btnAgregarDispositivo;
+    private Button btnCatalogoOnline;
     private LinearLayout llDispositivos;
 
     @Override
@@ -29,12 +36,13 @@ public class DashboardClienteActivity extends AppCompatActivity {
 
         etDispositivo = findViewById(R.id.etDispositivo);
         btnAgregarDispositivo = findViewById(R.id.btnAgregarDispositivo);
+        btnCatalogoOnline = findViewById(R.id.btnCatalogoOnline);
         llDispositivos = findViewById(R.id.llDispositivos);
-
 
         cargarPlanDesdePrefs();
 
         btnAgregarDispositivo.setOnClickListener(v -> agregarDispositivo());
+        btnCatalogoOnline.setOnClickListener(v -> abrirCatalogoOnline());
     }
 
     private void cargarPlanDesdePrefs() {
@@ -78,5 +86,31 @@ public class DashboardClienteActivity extends AppCompatActivity {
 
         llDispositivos.addView(tv);
         etDispositivo.setText("");
+    }
+
+    private void abrirCatalogoOnline() {
+        if (!hayConexion()) {
+            Toast.makeText(this, "Sin conexión a Internet", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Uri uri = Uri.parse("https://rawg.io/");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
+
+    private boolean hayConexion() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        if (cm == null) return false;
+
+        Network network = cm.getActiveNetwork();
+        if (network == null) return false;
+
+        NetworkCapabilities caps = cm.getNetworkCapabilities(network);
+        if (caps == null) return false;
+
+        return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                && (caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                || caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
     }
 }
