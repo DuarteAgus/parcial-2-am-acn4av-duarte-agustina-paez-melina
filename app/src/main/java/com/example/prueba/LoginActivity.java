@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void intentarLogin() {
-        String email = etEmail.getText().toString().trim();
+        String email    = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(email)) {
@@ -71,12 +71,11 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, OrdenActivity.class);
             intent.putExtra(OfertasActivity.EXTRA_PLAN_ID, planIdFromIntent);
             startActivity(intent);
-            finish();
         } else {
-
             Intent intent = new Intent(this, DashboardClienteActivity.class);
             startActivity(intent);
-            finish();
         }
+
+        finish();
     }
 }
