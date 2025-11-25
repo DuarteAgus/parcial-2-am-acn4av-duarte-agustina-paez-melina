@@ -36,7 +36,6 @@ public class AdminDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashboard);
 
-        // Vincular vistas
         tvAdminWelcome   = findViewById(R.id.tvAdminWelcome);
         tvAdminHighlight = findViewById(R.id.tvAdminHighlight);
         tvAdminHint      = findViewById(R.id.tvAdminHint);
