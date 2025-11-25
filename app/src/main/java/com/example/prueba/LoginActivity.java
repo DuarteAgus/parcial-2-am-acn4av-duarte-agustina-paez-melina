@@ -12,13 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static final String PREFS_USER   = "nucloud_user";
+    public static final String PREFS_USER    = "nucloud_user";
     public static final String KEY_IS_LOGGED = "is_logged_in";
     public static final String KEY_EMAIL     = "user_email";
 
     private EditText etEmail;
     private EditText etPassword;
     private Button btnLogin;
+    private Button btnGoRegister;
 
     private String planIdFromIntent;
 
@@ -27,13 +28,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        etEmail    = findViewById(R.id.etEmail);
-        etPassword = findViewById(R.id.etPassword);
-        btnLogin   = findViewById(R.id.btnLogin);
+        etEmail       = findViewById(R.id.etEmail);
+        etPassword    = findViewById(R.id.etPassword);
+        btnLogin      = findViewById(R.id.btnLogin);
+        btnGoRegister = findViewById(R.id.btnGoRegister);
 
         planIdFromIntent = getIntent().getStringExtra(OfertasActivity.EXTRA_PLAN_ID);
 
         btnLogin.setOnClickListener(v -> intentarLogin());
+
+        btnGoRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
+            if (planIdFromIntent != null) {
+                intent.putExtra(OfertasActivity.EXTRA_PLAN_ID, planIdFromIntent);
+            }
+            startActivity(intent);
+        });
     }
 
     private void intentarLogin() {
@@ -61,8 +71,12 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, OrdenActivity.class);
             intent.putExtra(OfertasActivity.EXTRA_PLAN_ID, planIdFromIntent);
             startActivity(intent);
-        }
+            finish();
+        } else {
 
-        finish();
+            Intent intent = new Intent(this, DashboardClienteActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }

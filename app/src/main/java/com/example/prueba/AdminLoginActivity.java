@@ -11,20 +11,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AdminLoginActivity extends AppCompatActivity {
 
-    private static final String ADMIN_USER = "admin@nucloud.com";
-    private static final String ADMIN_PASS = "admin123";
-
     private EditText etAdminUser;
     private EditText etAdminPass;
     private Button btnAdminLogin;
+
+    private static final String ADMIN_USER = "admin@nucloud.com";
+    private static final String ADMIN_PASS = "admin123";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_login);
 
-        etAdminUser  = findViewById(R.id.etAdminUser);
-        etAdminPass  = findViewById(R.id.etAdminPass);
+        etAdminUser   = findViewById(R.id.etAdminUser);
+        etAdminPass   = findViewById(R.id.etAdminPass);
         btnAdminLogin = findViewById(R.id.btnAdminLogin);
 
         btnAdminLogin.setOnClickListener(v -> intentarLoginAdmin());
@@ -43,13 +43,13 @@ public class AdminLoginActivity extends AppCompatActivity {
             return;
         }
 
-        if (ADMIN_USER.equals(user) && ADMIN_PASS.equals(pass)) {
-            Toast.makeText(this, "Bienvenido administrador", Toast.LENGTH_SHORT).show();
+        if (user.equals(ADMIN_USER) && pass.equals(ADMIN_PASS)) {
+            Toast.makeText(this, "Bienvenida administradora", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, AdminDashboardActivity.class);
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(this, "Credenciales de administrador incorrectas", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
         }
     }
 }

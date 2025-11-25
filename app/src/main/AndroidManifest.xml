@@ -18,6 +18,8 @@
 
         <activity android:name=".ClientesActivity" />
 
+        <activity android:name=".RegistroActivity" />
+
         <activity android:name=".OrdenActivity" />
 
         <activity android:name=".OfertasActivity" />

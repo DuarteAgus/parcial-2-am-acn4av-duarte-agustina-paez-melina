@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminLoginActivity">
+    tools:context=".RegistroActivity">
 
     <ImageView
-        android:id="@+id/imgBackgroundAdminLogin"
+        android:id="@+id/imgBackgroundRegistro"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
@@ -19,6 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ScrollView
+        android:id="@+id/svRegistro"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
@@ -28,35 +29,47 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/llRegistroMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp">
 
             <TextView
-                android:id="@+id/tvAdminLoginTitle"
+                android:id="@+id/tvRegistroTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ingreso administrador"
+                android:text="Crear cuenta NuCloud"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvAdminLoginSubtitle"
+                android:id="@+id/tvRegistroSubtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Accedé al panel de administración de NuCloud Gaming."
+                android:text="Completá tus datos para registrarte y gestionar tus planes."
                 android:textColor="@android:color/white"
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/etAdminUser"
+                android:id="@+id/etNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:hint="Usuario administrador"
+                android:hint="Nombre completo"
+                android:background="#1F1B3A"
+                android:textColor="@android:color/white"
+                android:textColorHint="#AAAAAA"
+                android:padding="12dp" />
+
+            <EditText
+                android:id="@+id/etEmailRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:background="#1F1B3A"
                 android:textColor="@android:color/white"
@@ -64,7 +77,7 @@
                 android:padding="12dp" />
 
             <EditText
-                android:id="@+id/etAdminPass"
+                android:id="@+id/etPasswordRegistro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -75,20 +88,30 @@
                 android:textColorHint="#AAAAAA"
                 android:padding="12dp" />
 
+            <EditText
+                android:id="@+id/etPasswordConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Repetir contraseña"
+                android:inputType="textPassword"
+                android:background="#1F1B3A"
+                android:textColor="@android:color/white"
+                android:textColorHint="#AAAAAA"
+                android:padding="12dp" />
+
             <Button
-                android:id="@+id/btnAdminLogin"
+                android:id="@+id/btnCrearCuenta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Ingresar" />
+                android:text="Crear cuenta" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="24dp"
                 android:background="#33FFFFFF" />
-
-
 
             <include
                 layout="@layout/footer_nucloud" />
