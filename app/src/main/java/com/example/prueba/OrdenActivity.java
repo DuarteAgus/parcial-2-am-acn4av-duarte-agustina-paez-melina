@@ -33,15 +33,23 @@ public class OrdenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orden);
 
-        tvTituloOrden   = findViewById(R.id.tvTituloOrden);
-        tvResumenPlan   = findViewById(R.id.tvResumenPlan);
-        tvPrecioPlan    = findViewById(R.id.tvPrecioPlan);
-        rgMetodoPago    = findViewById(R.id.rgMetodoPago);
-        etAlias         = findViewById(R.id.etAlias);
-        etCupon         = findViewById(R.id.etCupon);
+        tvTituloOrden     = findViewById(R.id.tvTituloOrden);
+        tvResumenPlan     = findViewById(R.id.tvResumenPlan);
+        tvPrecioPlan      = findViewById(R.id.tvPrecioPlan);
+        rgMetodoPago      = findViewById(R.id.rgMetodoPago);
+        etAlias           = findViewById(R.id.etAlias);
+        etCupon           = findViewById(R.id.etCupon);
         btnConfirmarOrden = findViewById(R.id.btnConfirmarOrden);
 
         planId = getIntent().getStringExtra(OfertasActivity.EXTRA_PLAN_ID);
+
+        if (planId == null) {
+            Toast.makeText(this, "Primero seleccioná un plan", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, OfertasActivity.class));
+            finish();
+            return;
+        }
+
         configurarPlan(planId);
 
         btnConfirmarOrden.setOnClickListener(v -> confirmarOrden());
@@ -108,6 +116,7 @@ public class OrdenActivity extends AppCompatActivity {
         Toast.makeText(this, "Plan contratado correctamente", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, DashboardClienteActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
