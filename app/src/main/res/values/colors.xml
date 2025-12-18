@@ -12,7 +12,7 @@
 
     <color name="violet_900">#221234</color>
     <color name="button_rose">#EC4899</color>
-    <color name="text_primary">@color/white</color>
+    <color name="text_primary">#FFFFFF</color>
     <color name="text_secondary">#D6CFE3</color>
     <color name="card_bg">#2B1844</color>
     <color name="divider">#4A3A63</color>

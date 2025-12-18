@@ -48,11 +48,11 @@
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/cd_menu"
                     android:padding="4dp"
-                    android:tint="@color/text_primary"
                     app:srcCompat="@drawable/ic_menu"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:tint="@color/text_primary" />
 
                 <TextView
                     android:id="@+id/tvBrand"
