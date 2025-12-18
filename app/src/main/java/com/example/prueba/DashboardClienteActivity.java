@@ -36,16 +36,15 @@ public class DashboardClienteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_cliente);
 
-        tvUsuario         = findViewById(R.id.tvUsuario);
-        tvEstadoPlan      = findViewById(R.id.tvEstadoPlan);
-        tvDetallePlan     = findViewById(R.id.tvDetallePlan);
-        etDispositivo     = findViewById(R.id.etDispositivo);
-        btnAgregarDispositivo = findViewById(R.id.btnAgregarDispositivo);
-        btnCatalogoOnline = findViewById(R.id.btnCatalogoOnline);
-        btnLogout         = findViewById(R.id.btnLogout);
-        llDispositivos    = findViewById(R.id.llDispositivos);
+        tvUsuario              = findViewById(R.id.tvUsuario);
+        tvEstadoPlan           = findViewById(R.id.tvEstadoPlan);
+        tvDetallePlan          = findViewById(R.id.tvDetallePlan);
+        etDispositivo          = findViewById(R.id.etDispositivo);
+        btnAgregarDispositivo  = findViewById(R.id.btnAgregarDispositivo);
+        btnCatalogoOnline      = findViewById(R.id.btnCatalogoOnline);
+        btnLogout              = findViewById(R.id.btnLogout);
+        llDispositivos         = findViewById(R.id.llDispositivos);
 
-        // ✅ Firebase manda: si no hay sesión, no debería entrar al dashboard
         if (!haySesionFirebase()) {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
@@ -54,7 +53,6 @@ public class DashboardClienteActivity extends AppCompatActivity {
         }
 
         cargarUsuario();
-
         cargarPlanDesdePrefs();
 
         btnAgregarDispositivo.setOnClickListener(v -> agregarDispositivo());
@@ -71,6 +69,14 @@ public class DashboardClienteActivity extends AppCompatActivity {
 
         if (user != null && user.getEmail() != null) {
             tvUsuario.setText("Usuario: " + user.getEmail());
+            return;
+        }
+
+        SharedPreferences prefsUser = getSharedPreferences(LoginActivity.PREFS_USER, MODE_PRIVATE);
+        String emailPrefs = prefsUser.getString(LoginActivity.KEY_EMAIL, null);
+
+        if (emailPrefs != null) {
+            tvUsuario.setText("Usuario: " + emailPrefs);
         } else {
             tvUsuario.setText("Usuario: invitado");
         }
@@ -90,7 +96,7 @@ public class DashboardClienteActivity extends AppCompatActivity {
         } else {
             tvEstadoPlan.setText("Plan contratado: " + nombre);
 
-            String detalle = "Precio: " + precio;
+            String detalle = "Precio: " + (precio != null ? precio : "-");
             if (metodo != null) {
                 detalle += "\nMétodo de pago: " + metodo;
             }
@@ -146,12 +152,11 @@ public class DashboardClienteActivity extends AppCompatActivity {
     }
 
     private void cerrarSesion() {
-        // ✅ Logout real Firebase
         FirebaseAuth.getInstance().signOut();
 
-        // (Opcional) limpiar tu prefs vieja para que no quede "logueado" fake
-        SharedPreferences prefsUser = getSharedPreferences(LoginActivity.PREFS_USER, MODE_PRIVATE);
-        prefsUser.edit().clear().apply();
+        getSharedPreferences(LoginActivity.PREFS_USER, MODE_PRIVATE).edit().clear().apply();
+
+        getSharedPreferences("nucloud_prefs", MODE_PRIVATE).edit().clear().apply();
 
         Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
 
